@@ -8,4 +8,6 @@
 
 # 테스트코드 작성 (AssertJ)
 * [AssertJ 공식문서](https://assertj.github.io/doc/)
-* 
+
+# 코드 컨벤션
+* [컨벤션](/docs/code_convention.md)

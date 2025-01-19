@@ -32,6 +32,14 @@ public class Invoice {
         this.performances = performances;
     }
 
+    public List<Performance> getPerformances() {
+        return performances;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
     public static class Performance {
         private String playID;
         private int audience;
@@ -41,20 +49,13 @@ public class Invoice {
             this.audience = audience;
         }
 
+
         public String getPlayID() {
             return playID;
         }
 
-        public void setPlayID(String playID) {
-            this.playID = playID;
+        public int getAudience() {
+            return audience;
         }
-    }
-
-    public String getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(String customer) {
-        this.customer = customer;
     }
 }

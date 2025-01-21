@@ -32,26 +32,26 @@ public class Statement {
         return result.toString();
     }
 
-    int amountFor(Invoice.Performance perf, Play play) {
-        int thisAmount = 0;
+    int amountFor(Invoice.Performance performance, Play play) {
+        int performanceAmountResult = 0;
 
         switch (play.getType()) {
             case "tragedy":
-                thisAmount = 40000;
-                if (perf.getAudience() > 30) {
-                    thisAmount += 1000 * (perf.getAudience() - 30);
+                performanceAmountResult = 40000;
+                if (performance.getAudience() > 30) {
+                    performanceAmountResult += 1000 * (performance.getAudience() - 30);
                 }
                 break;
             case "comedy":
-                thisAmount = 30000;
-                if (perf.getAudience() > 20) {
-                    thisAmount += 10000 + 500 * (perf.getAudience() - 20);
+                performanceAmountResult = 30000;
+                if (performance.getAudience() > 20) {
+                    performanceAmountResult += 10000 + 500 * (performance.getAudience() - 20);
                 }
-                thisAmount += 300 * perf.getAudience();
+                performanceAmountResult += 300 * performance.getAudience();
                 break;
             default:
                 throw new RuntimeException("알 수 없는 장르: " + play.getType());
         }
-        return thisAmount; // 값이 바뀌는 변수값 반환
+        return performanceAmountResult; // 값이 바뀌는 변수값 반환
     }
 }

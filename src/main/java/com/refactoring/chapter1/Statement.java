@@ -32,7 +32,7 @@ public class Statement {
         return result.toString();
     }
 
-    private static int amountFor(Invoice.Performance perf, Play play) {
+    int amountFor(Invoice.Performance perf, Play play) {
         int thisAmount = 0;
 
         switch (play.getType()) {

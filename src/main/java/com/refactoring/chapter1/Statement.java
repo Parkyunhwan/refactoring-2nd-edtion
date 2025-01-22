@@ -6,20 +6,26 @@ import java.util.Locale;
 public class Statement {
     public String statement(Invoice invoice, Plays plays) {
         int totalAmount = 0;
-        int volumeCredits = 0;
-
         StringBuilder result = new StringBuilder(String.format("청구내역 (고객명: %s)\n", invoice.getCustomer()));
-
         for (Invoice.Performance perf : invoice.getPerformances()) {
-            volumeCredits += volumeCreditsFor(plays, perf);
             result.append(String.format("    %s: %s (%s석)\n", playFor(plays, perf).getName(), usd(amountFor(perf, plays)), perf.getAudience()));
             totalAmount += amountFor(perf, plays);
         }
+
+        int volumeCredits = totalVolumeCredits(invoice, plays);
 
         result.append(String.format("총액: %s\n", usd(totalAmount)));
         result.append(String.format("적립 포인트: %s점", volumeCredits));
 
         return result.toString();
+    }
+
+    private int totalVolumeCredits(Invoice invoice, Plays plays) {
+        int volumeCredits = 0;
+        for (Invoice.Performance perf : invoice.getPerformances()) {
+            volumeCredits += volumeCreditsFor(plays, perf);
+        }
+        return volumeCredits;
     }
 
     private static String usd(int amount) {

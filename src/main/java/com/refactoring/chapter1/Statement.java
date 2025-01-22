@@ -14,7 +14,7 @@ public class Statement {
         StringBuilder result = new StringBuilder(String.format("청구내역 (고객명: %s)\n", invoice.getCustomer()));
 
         for (Invoice.Performance perf : invoice.getPerformances()) {
-            int thisAmount = amountFor(perf, playFor(plays, perf));
+            int thisAmount = amountFor(perf, plays);
 
             volumeCredits += Math.max(perf.getAudience() - 30, 0);
             if ("comedy".equals(playFor(plays, perf).getType())) {
@@ -35,10 +35,10 @@ public class Statement {
         return plays.get(perf.getPlayID());
     }
 
-    int amountFor(Invoice.Performance performance, Play play) {
+    int amountFor(Invoice.Performance performance, Plays plays) {
         int performanceAmountResult = 0;
 
-        switch (play.getType()) {
+        switch (playFor(plays, performance).getType()) {
             case "tragedy":
                 performanceAmountResult = 40000;
                 if (performance.getAudience() > 30) {
@@ -53,7 +53,7 @@ public class Statement {
                 performanceAmountResult += 300 * performance.getAudience();
                 break;
             default:
-                throw new RuntimeException("알 수 없는 장르: " + play.getType());
+                throw new RuntimeException("알 수 없는 장르: " + playFor(plays, performance).getType());
         }
         return performanceAmountResult; // 값이 바뀌는 변수값 반환
     }

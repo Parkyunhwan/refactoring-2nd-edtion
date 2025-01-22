@@ -53,7 +53,7 @@ class StatementTest {
         Statement stat = new Statement();
         List<Integer> amountResults = new ArrayList<>();
         for (Invoice.Performance performance : invoice.getPerformances()) {
-            int amountFor = stat.amountFor(performance, plays.get(performance.getPlayID()));
+            int amountFor = stat.amountFor(performance, plays);
             amountResults.add(amountFor);
         }
 

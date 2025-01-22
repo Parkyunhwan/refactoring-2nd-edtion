@@ -12,17 +12,17 @@ public class Statement {
 
         for (Invoice.Performance perf : invoice.getPerformances()) {
             volumeCredits += volumeCreditsFor(plays, perf);
-            result.append(String.format("    %s: %s (%s석)\n", playFor(plays, perf).getName(), format(amountFor(perf, plays) / 100.0), perf.getAudience()));
+            result.append(String.format("    %s: %s (%s석)\n", playFor(plays, perf).getName(), usd(amountFor(perf, plays) / 100.0), perf.getAudience()));
             totalAmount += amountFor(perf, plays);
         }
 
-        result.append(String.format("총액: %s\n", format(totalAmount / 100.0)));
+        result.append(String.format("총액: %s\n", usd(totalAmount / 100.0)));
         result.append(String.format("적립 포인트: %s점", volumeCredits));
 
         return result.toString();
     }
 
-    private static String format(Number number) {
+    private static String usd(Number number) {
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.US);
         numberFormat.setMaximumFractionDigits(2);
         numberFormat.setMinimumFractionDigits(2);

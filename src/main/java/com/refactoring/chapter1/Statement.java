@@ -12,21 +12,21 @@ public class Statement {
 
         for (Invoice.Performance perf : invoice.getPerformances()) {
             volumeCredits += volumeCreditsFor(plays, perf);
-            result.append(String.format("    %s: %s (%s석)\n", playFor(plays, perf).getName(), usd(amountFor(perf, plays) / 100.0), perf.getAudience()));
+            result.append(String.format("    %s: %s (%s석)\n", playFor(plays, perf).getName(), usd(amountFor(perf, plays)), perf.getAudience()));
             totalAmount += amountFor(perf, plays);
         }
 
-        result.append(String.format("총액: %s\n", usd(totalAmount / 100.0)));
+        result.append(String.format("총액: %s\n", usd(totalAmount)));
         result.append(String.format("적립 포인트: %s점", volumeCredits));
 
         return result.toString();
     }
 
-    private static String usd(Number number) {
+    private static String usd(int amount) {
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.US);
         numberFormat.setMaximumFractionDigits(2);
         numberFormat.setMinimumFractionDigits(2);
-        return numberFormat.format(number);
+        return numberFormat.format(amount / 100.0);
     }
 
     private int volumeCreditsFor(Plays plays, Invoice.Performance perf) {

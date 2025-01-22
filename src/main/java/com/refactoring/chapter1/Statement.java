@@ -10,18 +10,18 @@ public class Statement {
             result.append(String.format("    %s: %s (%s석)\n", playFor(plays, perf).getName(), usd(amountFor(perf, plays)), perf.getAudience()));
         }
 
-        result.append(String.format("총액: %s\n", usd(totalAmount(invoice, plays, result))));
+        result.append(String.format("총액: %s\n", usd(totalAmount(invoice, plays))));
         result.append(String.format("적립 포인트: %s점", totalVolumeCredits(invoice, plays)));
 
         return result.toString();
     }
 
-    private int totalAmount(Invoice invoice, Plays plays, StringBuilder result) {
-        int totalAmount = 0;
+    private int totalAmount(Invoice invoice, Plays plays) {
+        int result = 0;
         for (Invoice.Performance perf : invoice.getPerformances()) {
-            totalAmount += amountFor(perf, plays);
+            result += amountFor(perf, plays);
         }
-        return totalAmount;
+        return result;
     }
 
     private int totalVolumeCredits(Invoice invoice, Plays plays) {

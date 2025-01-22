@@ -7,22 +7,26 @@ public class Statement {
     public String statement(Invoice invoice, Plays plays) {
         int totalAmount = 0;
         int volumeCredits = 0;
-        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.US);
-        numberFormat.setMaximumFractionDigits(2);
-        numberFormat.setMinimumFractionDigits(2);
 
         StringBuilder result = new StringBuilder(String.format("청구내역 (고객명: %s)\n", invoice.getCustomer()));
 
         for (Invoice.Performance perf : invoice.getPerformances()) {
             volumeCredits += volumeCreditsFor(plays, perf);
-            result.append(String.format("    %s: %s (%s석)\n", playFor(plays, perf).getName(), numberFormat.format(amountFor(perf, plays) / 100.0), perf.getAudience()));
+            result.append(String.format("    %s: %s (%s석)\n", playFor(plays, perf).getName(), format(amountFor(perf, plays) / 100.0), perf.getAudience()));
             totalAmount += amountFor(perf, plays);
         }
 
-        result.append(String.format("총액: %s\n", numberFormat.format(totalAmount / 100.0)));
+        result.append(String.format("총액: %s\n", format(totalAmount / 100.0)));
         result.append(String.format("적립 포인트: %s점", volumeCredits));
 
         return result.toString();
+    }
+
+    private static String format(Number number) {
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.US);
+        numberFormat.setMaximumFractionDigits(2);
+        numberFormat.setMinimumFractionDigits(2);
+        return numberFormat.format(number);
     }
 
     private int volumeCreditsFor(Plays plays, Invoice.Performance perf) {

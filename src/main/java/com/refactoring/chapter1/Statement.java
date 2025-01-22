@@ -14,15 +14,13 @@ public class Statement {
         StringBuilder result = new StringBuilder(String.format("청구내역 (고객명: %s)\n", invoice.getCustomer()));
 
         for (Invoice.Performance perf : invoice.getPerformances()) {
-            int thisAmount = amountFor(perf, plays);
-
             volumeCredits += Math.max(perf.getAudience() - 30, 0);
             if ("comedy".equals(playFor(plays, perf).getType())) {
                 volumeCredits += (int) Math.floor((double) perf.getAudience() / 5);
             }
 
-            result.append(String.format("    %s: %s (%s석)\n", playFor(plays, perf).getName(), numberFormat.format(thisAmount / 100.0), perf.getAudience()));
-            totalAmount += thisAmount;
+            result.append(String.format("    %s: %s (%s석)\n", playFor(plays, perf).getName(), numberFormat.format(amountFor(perf, plays) / 100.0), perf.getAudience()));
+            totalAmount += amountFor(perf, plays);
         }
 
         result.append(String.format("총액: %s\n", numberFormat.format(totalAmount / 100.0)));

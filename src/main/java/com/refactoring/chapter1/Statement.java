@@ -25,11 +25,11 @@ public class Statement {
     }
 
     private int totalVolumeCredits(Invoice invoice, Plays plays) {
-        int volumeCredits = 0;
+        int result = 0;
         for (Invoice.Performance perf : invoice.getPerformances()) {
-            volumeCredits += volumeCreditsFor(plays, perf);
+            result += volumeCreditsFor(plays, perf);
         }
-        return volumeCredits;
+        return result;
     }
 
     private static String usd(int amount) {

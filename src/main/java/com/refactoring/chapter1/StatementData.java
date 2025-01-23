@@ -11,9 +11,14 @@ public class StatementData {
     private Invoice invoice;
     private Plays plays;
 
+    private String customer;
+
+
     public StatementData(Invoice invoice, Plays plays) {
         this.invoice = invoice;
         this.plays = plays;
+
+        this.customer = invoice.getCustomer();
     }
 
     public static StatementData createStatementData(Invoice invoice, Plays plays) {
@@ -25,7 +30,7 @@ public class StatementData {
     }
 
     public String getCustomer() {
-        return invoice.getCustomer();
+        return customer;
     }
 
     public int totalAmount() {

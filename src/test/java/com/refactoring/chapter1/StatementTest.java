@@ -1,13 +1,18 @@
 package com.refactoring.chapter1;
 
+import com.refactoring.chapter1.calculator.PerformanceCalculator;
+import com.refactoring.chapter1.data.Invoice;
+import com.refactoring.chapter1.data.Play;
+import com.refactoring.chapter1.data.Plays;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.refactoring.chapter1.format.CurrencyFormat.usd;
 
 
 class StatementTest {
@@ -43,6 +48,38 @@ class StatementTest {
                     Hamlet: $650.00 (55석)
                     As You Like it: $580.00 (35석)
                     Othello: $500.00 (40석)
+                총액: $1,730.00
+                적립 포인트: 47점""";
+        Assertions.assertThat(ret).isEqualTo(answer);
+    }
+
+    private String renderHtml(StatementData data) {
+        StringBuilder result = new StringBuilder(String.format("<h1> 청구내역 (고객명: %s)\n </h1>", data.getCustomer()));
+        result.append("<table> \n");
+        result.append("<tr><th> 연극 </th> <th>좌석 수</th> <th>금액</th>");
+        for (Invoice.Performance performance : data.getPerformances()) {
+            PerformanceCalculator performanceCalculator = PerformanceCalculator.createPerformanceCalculator(performance, data.getPlay(performance));
+            result.append(String.format("<tr><td> %s: </td> <td> $%s </td> <td> %s석 </td></tr>\n", data.getPlay(performance).getName(), usd(performanceCalculator.amountFor()), performance.getAudience()));
+        }
+        result.append("</table>\n");
+
+        result.append(String.format("총액: $%s\n", usd(data.totalAmount())));
+        result.append(String.format("적립 포인트: %d점", data.totalVolumeCredits()));
+        return result.toString();
+    }
+
+    @Test
+    void htmlStatement_출력값_검증_테스트() {
+        Statement stat = new Statement();
+        String ret = stat.htmlStatement(invoice, plays);
+        String answer = """
+                <h1> 청구내역 (고객명: BigCo) </h1>
+                <table>
+                <tr><th> 연극 </th> <th>좌석 수</th> <th>금액</th>
+                <tr><td> Hamlet: </td> <td> $650.00 </td> <td> 55석 </td></tr>
+                <tr><td> As You Like it: </td> <td> $580.00 </td> <td> 35석 </td></tr>
+                <tr><td> Othello: </td> <td> $500.00 </td> <td> 40석 </td></tr>
+                </table>
                 총액: $1,730.00
                 적립 포인트: 47점""";
         Assertions.assertThat(ret).isEqualTo(answer);

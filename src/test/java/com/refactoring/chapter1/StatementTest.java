@@ -51,9 +51,10 @@ class StatementTest {
     @Test
     void amountFor_계산_로직_테스트() {
         Statement stat = new Statement();
+        StatementData statementData = new StatementData(invoice, plays);
         List<Integer> amountResults = new ArrayList<>();
         for (Invoice.Performance performance : invoice.getPerformances()) {
-            int amountFor = stat.amountFor(performance, plays);
+            int amountFor = stat.amountFor(performance, statementData);
             amountResults.add(amountFor);
         }
 

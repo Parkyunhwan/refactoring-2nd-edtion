@@ -5,29 +5,34 @@ import java.util.Locale;
 
 public class Statement {
     public String statement(Invoice invoice, Plays plays) {
-        StringBuilder result = new StringBuilder(String.format("청구내역 (고객명: %s)\n", invoice.getCustomer()));
-        for (Invoice.Performance perf : invoice.getPerformances()) {
-            result.append(String.format("    %s: %s (%s석)\n", playFor(plays, perf).getName(), usd(amountFor(perf, plays)), perf.getAudience()));
+        StatementData statementData = new StatementData(invoice, plays);
+        return renderPlainText(statementData);
+    }
+
+    private String renderPlainText(StatementData data) {
+        StringBuilder result = new StringBuilder(String.format("청구내역 (고객명: %s)\n", data.getCustomer()));
+        for (Invoice.Performance perf : data.getPerformances()) {
+            result.append(String.format("    %s: %s (%s석)\n", data.getPlay(perf).getName(), usd(amountFor(perf, data)), perf.getAudience()));
         }
 
-        result.append(String.format("총액: %s\n", usd(totalAmount(invoice, plays))));
-        result.append(String.format("적립 포인트: %s점", totalVolumeCredits(invoice, plays)));
+        result.append(String.format("총액: %s\n", usd(totalAmount(data))));
+        result.append(String.format("적립 포인트: %s점", totalVolumeCredits(data)));
 
         return result.toString();
     }
 
-    private int totalAmount(Invoice invoice, Plays plays) {
+    private int totalAmount(StatementData data) {
         int result = 0;
-        for (Invoice.Performance perf : invoice.getPerformances()) {
-            result += amountFor(perf, plays);
+        for (Invoice.Performance perf : data.getPerformances()) {
+            result += amountFor(perf, data);
         }
         return result;
     }
 
-    private int totalVolumeCredits(Invoice invoice, Plays plays) {
+    private int totalVolumeCredits(StatementData data) {
         int result = 0;
-        for (Invoice.Performance perf : invoice.getPerformances()) {
-            result += volumeCreditsFor(plays, perf);
+        for (Invoice.Performance perf : data.getPerformances()) {
+            result += volumeCreditsFor(data, perf);
         }
         return result;
     }
@@ -39,22 +44,20 @@ public class Statement {
         return numberFormat.format(amount / 100.0);
     }
 
-    private int volumeCreditsFor(Plays plays, Invoice.Performance perf) {
+    private int volumeCreditsFor(StatementData statementData, Invoice.Performance perf) {
         int result = Math.max(perf.getAudience() - 30, 0);
-        if ("comedy".equals(playFor(plays, perf).getType())) {
+        if ("comedy".equals(statementData.getPlay(perf).getType())) {
             result += (int) Math.floor((double) perf.getAudience() / 5);
         }
         return result;
     }
 
-    private Play playFor(Plays plays, Invoice.Performance perf) {
-        return plays.get(perf.getPlayID());
-    }
 
-    int amountFor(Invoice.Performance performance, Plays plays) {
+
+    int amountFor(Invoice.Performance performance, StatementData data) {
         int performanceAmountResult = 0;
 
-        switch (playFor(plays, performance).getType()) {
+        switch (data.getPlay(performance).getType()) {
             case "tragedy":
                 performanceAmountResult = 40000;
                 if (performance.getAudience() > 30) {
@@ -69,7 +72,7 @@ public class Statement {
                 performanceAmountResult += 300 * performance.getAudience();
                 break;
             default:
-                throw new RuntimeException("알 수 없는 장르: " + playFor(plays, performance).getType());
+                throw new RuntimeException("알 수 없는 장르: " + data.getPlay(performance).getType());
         }
         return performanceAmountResult; // 값이 바뀌는 변수값 반환
     }

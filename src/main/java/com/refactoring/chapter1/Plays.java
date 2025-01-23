@@ -10,7 +10,7 @@ public class Plays {
         this.playMap = playMap;
     }
 
-    public Play get(String playID) {
-        return playMap.get(playID);
+    public Play get(Invoice.Performance perf) {
+        return playMap.get(perf.getPlayID());
     }
 }

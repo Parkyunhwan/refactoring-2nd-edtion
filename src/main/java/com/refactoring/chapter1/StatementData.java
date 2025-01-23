@@ -25,22 +25,14 @@ public class StatementData {
 
     public int totalAmount() {
         return getPerformances().stream()
-                .map(performance -> new PerformanceCalculator(performance, playFor(performance)).amountFor())
+                .map(performance -> PerformanceCalculator.createPerformanceCalculator(performance, playFor(performance)).amountFor())
                 .reduce(0, Integer::sum);
     }
 
     public int totalVolumeCredits() {
         return getPerformances().stream()
-                .map(this::volumeCreditsFor)
+                .map(performance -> PerformanceCalculator.createPerformanceCalculator(performance, playFor(performance)).volumeCreditsFor())
                 .reduce(0, Integer::sum);
-    }
-
-    public int volumeCreditsFor(Invoice.Performance perf) {
-        int result = Math.max(perf.getAudience() - 30, 0);
-        if ("comedy".equals(playFor(perf).getType())) {
-            result += (int) Math.floor((double) perf.getAudience() / 5);
-        }
-        return result;
     }
 
     public Play getPlay(Invoice.Performance perf) {

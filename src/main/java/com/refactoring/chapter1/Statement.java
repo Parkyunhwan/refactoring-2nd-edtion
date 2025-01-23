@@ -16,7 +16,7 @@ public class Statement {
         result.append("<table> \n");
         result.append("<tr><th> 연극 </th> <th>좌석 수</th> <th>금액</th>");
         for (Invoice.Performance performance : data.getPerformances()) {
-            PerformanceCalculator performanceCalculator = new PerformanceCalculator(performance, data.getPlay(performance));
+            PerformanceCalculator performanceCalculator = PerformanceCalculator.createPerformanceCalculator(performance, data.getPlay(performance));
             result.append(String.format("<tr><td> %s: </td> <td> $%s </td> <td> %s석 </td></tr>\n", data.getPlay(performance).getName(), usd(performanceCalculator.amountFor()), performance.getAudience()));
         }
         result.append("</table>\n");
@@ -29,7 +29,7 @@ public class Statement {
     private String renderPlainText(StatementData data) {
         StringBuilder result = new StringBuilder(String.format("청구내역 (고객명: %s)\n", data.getCustomer()));
         for (Invoice.Performance performance : data.getPerformances()) {
-            PerformanceCalculator performanceCalculator = new PerformanceCalculator(performance, data.getPlay(performance));
+            PerformanceCalculator performanceCalculator = PerformanceCalculator.createPerformanceCalculator(performance, data.getPlay(performance));
             result.append(String.format("    %s: %s (%s석)\n", data.getPlay(performance).getName(), usd(performanceCalculator.amountFor()), performance.getAudience()));
         }
 

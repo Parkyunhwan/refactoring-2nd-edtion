@@ -25,7 +25,7 @@ public class StatementData {
 
     public int totalAmount() {
         return getPerformances().stream()
-                .map(this::amountFor)
+                .map(performance -> new PerformanceCalculator(performance, playFor(performance)).amountFor())
                 .reduce(0, Integer::sum);
     }
 
@@ -41,29 +41,6 @@ public class StatementData {
             result += (int) Math.floor((double) perf.getAudience() / 5);
         }
         return result;
-    }
-
-    public int amountFor(Invoice.Performance performance) {
-        int performanceAmountResult = 0;
-
-        switch (playFor(performance).getType()) {
-            case "tragedy":
-                performanceAmountResult = 40000;
-                if (performance.getAudience() > 30) {
-                    performanceAmountResult += 1000 * (performance.getAudience() - 30);
-                }
-                break;
-            case "comedy":
-                performanceAmountResult = 30000;
-                if (performance.getAudience() > 20) {
-                    performanceAmountResult += 10000 + 500 * (performance.getAudience() - 20);
-                }
-                performanceAmountResult += 300 * performance.getAudience();
-                break;
-            default:
-                throw new RuntimeException("알 수 없는 장르: " + playFor(performance).getType());
-        }
-        return performanceAmountResult; // 값이 바뀌는 변수값 반환
     }
 
     public Play getPlay(Invoice.Performance perf) {

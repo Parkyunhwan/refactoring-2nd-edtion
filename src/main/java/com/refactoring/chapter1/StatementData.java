@@ -39,14 +39,14 @@ public class StatementData {
 
     public int totalAmount() {
         return getPerformances().stream()
-                .map(enrichPerformance -> PerformanceCalculator.createPerformanceCalculator(enrichPerformance).amountFor())
-                .reduce(0, Integer::sum);
+                .mapToInt(EnrichPerformance::getAmount)
+                .sum();
     }
 
     public int totalVolumeCredits() {
         return getPerformances().stream()
-                .map(enrichPerformance -> PerformanceCalculator.createPerformanceCalculator(enrichPerformance).volumeCreditsFor())
-                .reduce(0, Integer::sum);
+                .mapToInt(EnrichPerformance::getVolumeCredits)
+                .sum();
     }
 
     public Play getPlay(Invoice.Performance perf) {

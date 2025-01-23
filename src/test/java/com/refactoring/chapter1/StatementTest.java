@@ -76,7 +76,7 @@ class StatementTest {
         StatementData data = new StatementData(invoice, plays);
         List<Integer> amountResults = new ArrayList<>();
         for (EnrichPerformance performance : data.getPerformances()) {
-            PerformanceCalculator performanceCalculator = PerformanceCalculator.createPerformanceCalculator(performance);
+            PerformanceCalculator performanceCalculator = PerformanceCalculator.createPerformanceCalculator(performance.getPerformance(), performance.getPlay());
             int amountFor = performanceCalculator.amountFor();
             amountResults.add(amountFor);
         }

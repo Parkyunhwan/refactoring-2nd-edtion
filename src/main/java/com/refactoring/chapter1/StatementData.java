@@ -23,19 +23,15 @@ public class StatementData {
     }
 
     public int totalAmount() {
-        int result = 0;
-        for (Invoice.Performance perf : getPerformances()) {
-            result += amountFor(perf);
-        }
-        return result;
+        return getPerformances().stream()
+                .map(this::amountFor)
+                .reduce(0, Integer::sum);
     }
 
     public int totalVolumeCredits() {
-        int result = 0;
-        for (Invoice.Performance perf : getPerformances()) {
-            result += volumeCreditsFor(perf);
-        }
-        return result;
+        return getPerformances().stream()
+                .map(this::volumeCreditsFor)
+                .reduce(0, Integer::sum);
     }
 
     public int volumeCreditsFor(Invoice.Performance perf) {

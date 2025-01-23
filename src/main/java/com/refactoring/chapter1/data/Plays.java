@@ -1,4 +1,4 @@
-package com.refactoring.chapter1;
+package com.refactoring.chapter1.data;
 
 import java.util.HashMap;
 import java.util.Map;

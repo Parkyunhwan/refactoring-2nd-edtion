@@ -1,8 +1,7 @@
 package com.refactoring.chapter1.calculator;
 
-import com.refactoring.chapter1.Invoice;
-import com.refactoring.chapter1.PerformanceCalculator;
-import com.refactoring.chapter1.Play;
+import com.refactoring.chapter1.data.Invoice;
+import com.refactoring.chapter1.data.Play;
 
 public class TragedyCalculator extends PerformanceCalculator {
     public TragedyCalculator(Invoice.Performance performance, Play play) {

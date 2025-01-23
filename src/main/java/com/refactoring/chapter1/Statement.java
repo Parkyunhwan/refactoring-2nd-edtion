@@ -1,6 +1,10 @@
 package com.refactoring.chapter1;
 
-import static com.refactoring.chapter1.CurrencyFormat.*;
+import com.refactoring.chapter1.calculator.PerformanceCalculator;
+import com.refactoring.chapter1.data.Invoice;
+import com.refactoring.chapter1.data.Plays;
+
+import static com.refactoring.chapter1.format.CurrencyFormat.*;
 
 public class Statement {
     public String statement(Invoice invoice, Plays plays) {
@@ -8,20 +12,20 @@ public class Statement {
     }
 
     public String htmlStatement(Invoice invoice, Plays plays) {
-        return renderPlainText(StatementData.createStatementData(invoice, plays));
+        return renderHtml(StatementData.createStatementData(invoice, plays));
     }
 
     private String renderHtml(StatementData data) {
-        StringBuilder result = new StringBuilder(String.format("<h1> 청구내역 (고객명: %s)\n </h1>", data.getCustomer()));
-        result.append("<table> \n");
-        result.append("<tr><th> 연극 </th> <th>좌석 수</th> <th>금액</th>");
+        StringBuilder result = new StringBuilder(String.format("<h1> 청구내역 (고객명: %s) </h1>\n", data.getCustomer()));
+        result.append("<table>\n");
+        result.append("<tr><th> 연극 </th> <th>좌석 수</th> <th>금액</th>\n");
         for (Invoice.Performance performance : data.getPerformances()) {
             PerformanceCalculator performanceCalculator = PerformanceCalculator.createPerformanceCalculator(performance, data.getPlay(performance));
-            result.append(String.format("<tr><td> %s: </td> <td> $%s </td> <td> %s석 </td></tr>\n", data.getPlay(performance).getName(), usd(performanceCalculator.amountFor()), performance.getAudience()));
+            result.append(String.format("<tr><td> %s: </td> <td> %s </td> <td> %s석 </td></tr>\n", data.getPlay(performance).getName(), usd(performanceCalculator.amountFor()), performance.getAudience()));
         }
         result.append("</table>\n");
 
-        result.append(String.format("총액: $%s\n", usd(data.totalAmount())));
+        result.append(String.format("총액: %s\n", usd(data.totalAmount())));
         result.append(String.format("적립 포인트: %d점", data.totalVolumeCredits()));
         return result.toString();
     }

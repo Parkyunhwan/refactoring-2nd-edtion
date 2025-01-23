@@ -1,5 +1,10 @@
 package com.refactoring.chapter1;
 
+import com.refactoring.chapter1.calculator.PerformanceCalculator;
+import com.refactoring.chapter1.data.Invoice;
+import com.refactoring.chapter1.data.Play;
+import com.refactoring.chapter1.data.Plays;
+
 import java.util.List;
 
 public class StatementData {

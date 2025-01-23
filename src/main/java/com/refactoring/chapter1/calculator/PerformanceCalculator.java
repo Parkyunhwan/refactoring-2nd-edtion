@@ -1,7 +1,7 @@
-package com.refactoring.chapter1;
+package com.refactoring.chapter1.calculator;
 
-import com.refactoring.chapter1.calculator.ComedyCalculator;
-import com.refactoring.chapter1.calculator.TragedyCalculator;
+import com.refactoring.chapter1.data.Invoice;
+import com.refactoring.chapter1.data.Play;
 
 public abstract class PerformanceCalculator {
     protected Invoice.Performance performance;

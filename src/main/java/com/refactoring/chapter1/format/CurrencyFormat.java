@@ -1,4 +1,4 @@
-package com.refactoring.chapter1;
+package com.refactoring.chapter1.format;
 
 import java.text.NumberFormat;
 import java.util.Locale;

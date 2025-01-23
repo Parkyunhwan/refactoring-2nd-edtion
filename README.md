@@ -1,7 +1,7 @@
 # Refactoring 2nd Edtion
 
 # Chapter
-1. [chapter1](docs/chapter1.md)
+1. [chapter1](docs/chapter1.md) [✅]
 
 # js 원본 코드
 [참고](https://github.com/Youngerjesus/refactoring-2nd-edition/blob/master/document/chapter-01/README.md)

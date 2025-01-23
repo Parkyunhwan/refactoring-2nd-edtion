@@ -3,7 +3,7 @@ package com.refactoring.chapter1;
 import com.refactoring.chapter1.data.Invoice;
 import com.refactoring.chapter1.data.Plays;
 
-import java.util.*;
+import java.util.List;
 
 public class StatementData {
     private String customer;

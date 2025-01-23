@@ -3,7 +3,7 @@ package com.refactoring.chapter1;
 import com.refactoring.chapter1.data.Invoice;
 import com.refactoring.chapter1.data.Plays;
 
-import static com.refactoring.chapter1.format.CurrencyFormat.*;
+import static com.refactoring.chapter1.format.CurrencyFormat.usd;
 
 public class Statement {
     public String statement(Invoice invoice, Plays plays) {

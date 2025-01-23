@@ -1,6 +1,5 @@
 package com.refactoring.chapter1.calculator;
 
-import com.refactoring.chapter1.EnrichPerformance;
 import com.refactoring.chapter1.data.Invoice;
 import com.refactoring.chapter1.data.Play;
 

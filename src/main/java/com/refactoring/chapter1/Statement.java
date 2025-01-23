@@ -1,6 +1,5 @@
 package com.refactoring.chapter1;
 
-import com.refactoring.chapter1.calculator.PerformanceCalculator;
 import com.refactoring.chapter1.data.Invoice;
 import com.refactoring.chapter1.data.Plays;
 
@@ -20,7 +19,7 @@ public class Statement {
         result.append("<table>\n");
         result.append("<tr><th> 연극 </th> <th>좌석 수</th> <th>금액</th>\n");
         for (EnrichPerformance performance : data.getPerformances()) {
-            result.append(String.format("<tr><td> %s: </td> <td> %s </td> <td> %s석 </td></tr>\n", performance.getPlay().getName(), usd(performance.getAmount()), performance.getPerformance().getAudience()));
+            result.append(String.format("<tr><td> %s: </td> <td> %s </td> <td> %s석 </td></tr>\n", performance.getPlayName(), usd(performance.getAmount()), performance.getPerformanceAudience()));
         }
         result.append("</table>\n");
 
@@ -32,7 +31,7 @@ public class Statement {
     private String renderPlainText(StatementData data) {
         StringBuilder result = new StringBuilder(String.format("청구내역 (고객명: %s)\n", data.getCustomer()));
         for (EnrichPerformance performance : data.getPerformances()) {
-            result.append(String.format("    %s: %s (%s석)\n", performance.getPlay().getName(), usd(performance.getAmount()), performance.getPerformance().getAudience()));
+            result.append(String.format("    %s: %s (%s석)\n", performance.getPlayName(), usd(performance.getAmount()), performance.getPerformanceAudience()));
         }
 
         result.append(String.format("총액: %s\n", usd(data.totalAmount())));

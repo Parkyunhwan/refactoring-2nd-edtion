@@ -33,4 +33,12 @@ public class EnrichPerformance {
     public int getVolumeCredits() {
         return volumeCredits;
     }
+
+    public String getPlayName() {
+        return play.getName();
+    }
+
+    public int getPerformanceAudience() {
+        return performance.getAudience();
+    }
 }

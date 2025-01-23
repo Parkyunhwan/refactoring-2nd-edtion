@@ -4,11 +4,11 @@ import static com.refactoring.chapter1.CurrencyFormat.*;
 
 public class Statement {
     public String statement(Invoice invoice, Plays plays) {
-        return renderPlainText(createStatementData(invoice, plays));
+        return renderPlainText(StatementData.createStatementData(invoice, plays));
     }
 
     public String htmlStatement(Invoice invoice, Plays plays) {
-        return renderPlainText(createStatementData(invoice, plays));
+        return renderPlainText(StatementData.createStatementData(invoice, plays));
     }
 
     private String renderHtml(StatementData statementData) {
@@ -35,9 +35,5 @@ public class Statement {
         result.append(String.format("적립 포인트: %s점", data.totalVolumeCredits()));
 
         return result.toString();
-    }
-
-    private StatementData createStatementData(Invoice invoice, Plays plays) {
-        return new StatementData(invoice, plays);
     }
 }

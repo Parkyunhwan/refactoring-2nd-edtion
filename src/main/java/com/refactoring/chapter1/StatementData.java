@@ -1,9 +1,6 @@
 package com.refactoring.chapter1;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class StatementData {
     private Invoice invoice;
@@ -12,6 +9,10 @@ public class StatementData {
     public StatementData(Invoice invoice, Plays plays) {
         this.invoice = invoice;
         this.plays = plays;
+    }
+
+    public static StatementData createStatementData(Invoice invoice, Plays plays) {
+        return new StatementData(invoice, plays);
     }
 
     public List<Invoice.Performance> getPerformances() {

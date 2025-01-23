@@ -1,28 +1,19 @@
 package com.refactoring.chapter1;
 
-import com.refactoring.chapter1.calculator.PerformanceCalculator;
 import com.refactoring.chapter1.data.Invoice;
-import com.refactoring.chapter1.data.Play;
 import com.refactoring.chapter1.data.Plays;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class StatementData {
-    private Plays plays;
-
     private String customer;
     private List<EnrichPerformance> performances;
 
 
     public StatementData(Invoice invoice, Plays plays) {
-        this.plays = plays;
-
         this.customer = invoice.getCustomer();
         this.performances = invoice.getPerformances().stream()
-                .map(performance -> {
-                    return new EnrichPerformance(performance, playFor(performance));
-                }).toList();
+                .map(performance -> new EnrichPerformance(performance, plays.get(performance))).toList();
     }
 
     public static StatementData createStatementData(Invoice invoice, Plays plays) {
@@ -47,13 +38,5 @@ public class StatementData {
         return getPerformances().stream()
                 .mapToInt(EnrichPerformance::getVolumeCredits)
                 .sum();
-    }
-
-    public Play getPlay(Invoice.Performance perf) {
-        return playFor(perf);
-    }
-
-    private Play playFor(Invoice.Performance perf) {
-        return plays.get(perf);
     }
 }

@@ -2,8 +2,11 @@ package com.refactoring.chapter1;
 
 public class Statement {
     public String statement(Invoice invoice, Plays plays) {
-        StatementData statementData = new StatementData(invoice, plays);
-        return renderPlainText(statementData);
+        return renderPlainText(createStatementData(invoice, plays));
+    }
+
+    private StatementData createStatementData(Invoice invoice, Plays plays) {
+        return new StatementData(invoice, plays);
     }
 
     private String renderPlainText(StatementData data) {

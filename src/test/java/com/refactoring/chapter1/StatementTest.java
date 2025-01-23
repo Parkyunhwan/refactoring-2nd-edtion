@@ -53,21 +53,6 @@ class StatementTest {
         Assertions.assertThat(ret).isEqualTo(answer);
     }
 
-    private String renderHtml(StatementData data) {
-        StringBuilder result = new StringBuilder(String.format("<h1> 청구내역 (고객명: %s)\n </h1>", data.getCustomer()));
-        result.append("<table> \n");
-        result.append("<tr><th> 연극 </th> <th>좌석 수</th> <th>금액</th>");
-        for (Invoice.Performance performance : data.getPerformances()) {
-            PerformanceCalculator performanceCalculator = PerformanceCalculator.createPerformanceCalculator(performance, data.getPlay(performance));
-            result.append(String.format("<tr><td> %s: </td> <td> $%s </td> <td> %s석 </td></tr>\n", data.getPlay(performance).getName(), usd(performanceCalculator.amountFor()), performance.getAudience()));
-        }
-        result.append("</table>\n");
-
-        result.append(String.format("총액: $%s\n", usd(data.totalAmount())));
-        result.append(String.format("적립 포인트: %d점", data.totalVolumeCredits()));
-        return result.toString();
-    }
-
     @Test
     void htmlStatement_출력값_검증_테스트() {
         Statement stat = new Statement();
@@ -90,8 +75,8 @@ class StatementTest {
         Statement stat = new Statement();
         StatementData data = new StatementData(invoice, plays);
         List<Integer> amountResults = new ArrayList<>();
-        for (Invoice.Performance performance : invoice.getPerformances()) {
-            PerformanceCalculator performanceCalculator = PerformanceCalculator.createPerformanceCalculator(performance, data.getPlay(performance));
+        for (EnrichPerformance performance : data.getPerformances()) {
+            PerformanceCalculator performanceCalculator = PerformanceCalculator.createPerformanceCalculator(performance);
             int amountFor = performanceCalculator.amountFor();
             amountResults.add(amountFor);
         }

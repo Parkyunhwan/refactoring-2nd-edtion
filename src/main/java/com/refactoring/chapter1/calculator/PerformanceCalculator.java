@@ -1,5 +1,6 @@
 package com.refactoring.chapter1.calculator;
 
+import com.refactoring.chapter1.EnrichPerformance;
 import com.refactoring.chapter1.data.Invoice;
 import com.refactoring.chapter1.data.Play;
 
@@ -12,11 +13,11 @@ public abstract class PerformanceCalculator {
         this.play = play;
     }
 
-    public static PerformanceCalculator createPerformanceCalculator(Invoice.Performance performance, Play play) {
-        return switch (play.getType()) {
-            case "tragedy" -> new TragedyCalculator(performance, play);
-            case "comedy" -> new ComedyCalculator(performance, play);
-            default -> throw new RuntimeException("알 수 없는 장르: " + play.getType());
+    public static PerformanceCalculator createPerformanceCalculator(EnrichPerformance enrichPerformance) {
+        return switch (enrichPerformance.getPlay().getType()) {
+            case "tragedy" -> new TragedyCalculator(enrichPerformance.getPerformance(), enrichPerformance.getPlay());
+            case "comedy" -> new ComedyCalculator(enrichPerformance.getPerformance(), enrichPerformance.getPlay());
+            default -> throw new RuntimeException("알 수 없는 장르: " + enrichPerformance.getPlay().getType());
         };
     }
 

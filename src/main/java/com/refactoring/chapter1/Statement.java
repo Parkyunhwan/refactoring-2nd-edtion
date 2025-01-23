@@ -19,9 +19,9 @@ public class Statement {
         StringBuilder result = new StringBuilder(String.format("<h1> 청구내역 (고객명: %s) </h1>\n", data.getCustomer()));
         result.append("<table>\n");
         result.append("<tr><th> 연극 </th> <th>좌석 수</th> <th>금액</th>\n");
-        for (Invoice.Performance performance : data.getPerformances()) {
-            PerformanceCalculator performanceCalculator = PerformanceCalculator.createPerformanceCalculator(performance, data.getPlay(performance));
-            result.append(String.format("<tr><td> %s: </td> <td> %s </td> <td> %s석 </td></tr>\n", data.getPlay(performance).getName(), usd(performanceCalculator.amountFor()), performance.getAudience()));
+        for (EnrichPerformance performance : data.getPerformances()) {
+            PerformanceCalculator performanceCalculator = PerformanceCalculator.createPerformanceCalculator(performance);
+            result.append(String.format("<tr><td> %s: </td> <td> %s </td> <td> %s석 </td></tr>\n", performance.getPlay().getName(), usd(performanceCalculator.amountFor()), performance.getPerformance().getAudience()));
         }
         result.append("</table>\n");
 
@@ -32,9 +32,9 @@ public class Statement {
 
     private String renderPlainText(StatementData data) {
         StringBuilder result = new StringBuilder(String.format("청구내역 (고객명: %s)\n", data.getCustomer()));
-        for (Invoice.Performance performance : data.getPerformances()) {
-            PerformanceCalculator performanceCalculator = PerformanceCalculator.createPerformanceCalculator(performance, data.getPlay(performance));
-            result.append(String.format("    %s: %s (%s석)\n", data.getPlay(performance).getName(), usd(performanceCalculator.amountFor()), performance.getAudience()));
+        for (EnrichPerformance performance : data.getPerformances()) {
+            PerformanceCalculator performanceCalculator = PerformanceCalculator.createPerformanceCalculator(performance);
+            result.append(String.format("    %s: %s (%s석)\n", performance.getPlay().getName(), usd(performanceCalculator.amountFor()), performance.getPerformance().getAudience()));
         }
 
         result.append(String.format("총액: %s\n", usd(data.totalAmount())));

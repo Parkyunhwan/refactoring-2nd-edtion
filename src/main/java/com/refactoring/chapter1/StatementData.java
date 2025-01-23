@@ -5,20 +5,21 @@ import com.refactoring.chapter1.data.Invoice;
 import com.refactoring.chapter1.data.Play;
 import com.refactoring.chapter1.data.Plays;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StatementData {
-    private Invoice invoice;
     private Plays plays;
 
     private String customer;
+    private List<Invoice.Performance> performances;
 
 
     public StatementData(Invoice invoice, Plays plays) {
-        this.invoice = invoice;
         this.plays = plays;
 
         this.customer = invoice.getCustomer();
+        this.performances = invoice.getPerformances();
     }
 
     public static StatementData createStatementData(Invoice invoice, Plays plays) {
@@ -26,7 +27,7 @@ public class StatementData {
     }
 
     public List<Invoice.Performance> getPerformances() {
-        return invoice.getPerformances();
+        return performances;
     }
 
     public String getCustomer() {

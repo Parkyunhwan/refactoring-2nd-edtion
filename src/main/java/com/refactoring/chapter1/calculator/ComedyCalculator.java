@@ -1,4 +1,8 @@
-package com.refactoring.chapter1;
+package com.refactoring.chapter1.calculator;
+
+import com.refactoring.chapter1.Invoice;
+import com.refactoring.chapter1.PerformanceCalculator;
+import com.refactoring.chapter1.Play;
 
 public class ComedyCalculator extends PerformanceCalculator {
     public ComedyCalculator(Invoice.Performance performance, Play play) {

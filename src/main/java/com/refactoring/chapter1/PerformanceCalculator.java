@@ -1,8 +1,11 @@
 package com.refactoring.chapter1;
 
+import com.refactoring.chapter1.calculator.ComedyCalculator;
+import com.refactoring.chapter1.calculator.TragedyCalculator;
+
 public abstract class PerformanceCalculator {
-    Invoice.Performance performance;
-    Play play;
+    protected Invoice.Performance performance;
+    protected Play play;
 
     public PerformanceCalculator(Invoice.Performance performance, Play play) {
         this.performance = performance;
